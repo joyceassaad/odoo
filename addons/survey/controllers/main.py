@@ -266,8 +266,6 @@ class Survey(http.Controller):
 
         user_input_lines, search_filters = self._extract_filters_data(survey_sudo, post)
         stats_array = survey_sudo.question_and_page_ids._prepare_statistics(user_input_lines)
-        import pdb;
-        pdb.set_trace()
         data.update({'answers_count': {
             str(r['question'].id): {str(s['suggested_answer'].id): s['count'] for s in r['table_data']} for r in
             stats_array}})
