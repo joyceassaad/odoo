@@ -406,10 +406,7 @@ class Survey(http.Controller):
         if answer_sudo.state != 'done' and answer_sudo.survey_time_limit_reached:
             answer_sudo._mark_done()
 
-        survey_data = self._prepare_survey_data(access_data['survey_sudo'], answer_sudo, **post)
-
-
-        return request.render('survey.survey_page_fill', survey_data)
+        return request.render('survey.survey_page_fill', self._prepare_survey_data(access_data['survey_sudo'], answer_sudo, **post))
 
     # --------------------------------------------------------------------------
     # ROUTES to handle question images + survey background transitions + Tool
