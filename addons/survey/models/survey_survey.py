@@ -90,6 +90,7 @@ class Survey(models.Model):
     users_login_required = fields.Boolean('Require Login', help="If checked, users have to login before answering even with a valid token.")
     users_can_go_back = fields.Boolean('Users can go back', help="If checked, users can go back to previous pages.")
     users_can_signup = fields.Boolean('Users can signup', compute='_compute_users_can_signup')
+    users_can_see_votes = fields.Boolean('Users can see votes', help="If checked, users can see the votes of other users while voting.")
     # statistics
     answer_count = fields.Integer("Registered", compute="_compute_survey_statistic")
     answer_done_count = fields.Integer("Attempts", compute="_compute_survey_statistic")

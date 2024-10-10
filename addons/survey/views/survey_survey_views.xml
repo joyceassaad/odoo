@@ -121,6 +121,7 @@
                                             to <field name="attempts_limit" nolabel="1" class="oe_inline"/> attempts
                                         </div>
                                     </div>
+                                    <field name="users_can_see_votes"/>
                                 </group>
                                 <group string="Time &amp; Scoring" name="scoring" invisible="survey_type == 'survey'">
                                     <!-- Time -->
