@@ -264,12 +264,6 @@ class Survey(http.Controller):
             'format_date': lambda date: format_date(request.env, date)
         }
 
-        user_input_lines, search_filters = self._extract_filters_data(survey_sudo, post)
-        stats_array = survey_sudo.question_and_page_ids._prepare_statistics(user_input_lines)
-        data.update({'answers_count': {
-            str(r['question'].id): {str(s['suggested_answer'].id): s['count'] for s in r['table_data']} for r in
-            stats_array}})
-
         if survey_sudo.questions_layout != 'page_per_question':
             triggering_answers_by_question, triggered_questions_by_answer, selected_answers = answer_sudo._get_conditional_values()
             data.update({
@@ -283,6 +277,14 @@ class Survey(http.Controller):
                 },
                 'selected_answers': selected_answers.ids
             })
+
+        if survey_sudo.questions_layout == 'page_per_question' and survey_sudo.users_can_see_votes:
+            user_input_lines, search_filters = self._extract_filters_data(survey_sudo, post)
+            stats_array = survey_sudo.question_and_page_ids._prepare_statistics(user_input_lines)
+            data.update({'answers_count': {
+                str(r['question'].id): {str(s['suggested_answer'].id): s['count'] for s in r['table_data']
+                                        if isinstance(s, dict) and 'count' in s.keys() and 'suggested_answer' in s.keys()}
+                for r in stats_array}})
 
         if not answer_sudo.is_session_answer and survey_sudo.is_time_limited and answer_sudo.start_datetime:
             data.update({
