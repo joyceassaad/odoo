@@ -264,7 +264,7 @@ class Survey(http.Controller):
             'format_date': lambda date: format_date(request.env, date)
         }
 
-        if survey_sudo.users_can_see_votes:
+        if survey_sudo.participants_can_see_votes:
             user_input_lines, search_filters = self._extract_filters_data(survey_sudo, post)
             stats_array = survey_sudo.question_and_page_ids._prepare_statistics(user_input_lines)
             data.update({'answers_count': {
